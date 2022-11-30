@@ -5,7 +5,7 @@ import Typography from "../../components/Typography";
 import { subjects, subjectProps } from "../../data/questions";
 import QuestionCard from "./components/QuestionCard";
 
-const Subject = () =>{
+const SubjectPage = () =>{
     const [subject, setSubject] = useState<subjectProps |null>(null);
     useEffect(()=>{
         setSubject(subjects[0]);
@@ -15,7 +15,7 @@ const Subject = () =>{
             {subject && <Heading variant="h1" level={2}>{subject.subject} - Temas</Heading>}
             <GridContainer>
                 {subject && subject.themes.map((theme)=>(
-                    <QuestionCard bgImage={theme.themeBG} themeName = {theme.themeName} numberOfQuestions={theme.questions.length}/>
+                    <QuestionCard key={theme.themeId} themeId={theme.themeId} bgImage={theme.themeBG} themeName = {theme.themeName} numberOfQuestions={theme.questions.length}/>
                 ))}
             </GridContainer>
         </SubjectContainer>
@@ -34,4 +34,4 @@ const GridContainer = styled.div`
     
 `;
 
-export default Subject;
+export default SubjectPage;
