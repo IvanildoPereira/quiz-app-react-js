@@ -1,6 +1,7 @@
 export interface subjectProps{
     subject: string;
     themes: {
+        themeId: number,
         themeName: string,
         themeBG: string;
         questions: questionProps[]
@@ -18,7 +19,8 @@ export const subjects: subjectProps[] = [
     {
         subject: "Historia",
         themes: [
-            {
+            {   
+                themeId: 1,
                 themeName: "Egito Antigo",
                 themeBG: "https://www.coladaweb.com/wp-content/uploads/2014/12/Piramides-de-Gize1.png",
                 questions: [
@@ -85,6 +87,7 @@ export const subjects: subjectProps[] = [
                 ]
             },
             {
+                themeId: 2,
                 themeName: "Revolução Francesa",
                 themeBG: "https://revistamineracao.com.br/wp-content/uploads/2019/01/ABAL_Ecologia_Dezembro2018.jpg",
                 questions: [
@@ -151,6 +154,7 @@ export const subjects: subjectProps[] = [
                 ]
             },
             {
+                themeId: 3,
                 themeName: "1° Guerra Mundial",
                 themeBG: "https://www.otempo.com.br/image/contentid/policy:1.2066249:1541853152/image.jpg?f=3x2&q=0.6&w=1200&$p$f$q$w=4633e5f",
                 questions: [
