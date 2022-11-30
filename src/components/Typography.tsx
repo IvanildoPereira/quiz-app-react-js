@@ -8,9 +8,11 @@ interface TypographyProps{
     fontWeight?: keyof typeof FONT_WEIGHT;
     align?: "left" | "center" | "right",
     decoration?: "underline" | "line-through"
+    tag?: "p" | "span"
 }
 
-const Typography = styled.p<TypographyProps>`
+const Typography = styled("p").attrs<TypographyProps>(({ tag }) => ({
+    as: `${tag ? tag : "p"}`}))<TypographyProps>`
     color: ${({ theme, color }) => color ? theme[color] : theme.primaryColor};
     font-weight: ${props => props.fontWeight ? FONT_WEIGHT[props.fontWeight] : FONT_WEIGHT["normal"]};
     text-align: ${props => props.align ? props.align : "left"};
