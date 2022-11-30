@@ -1,21 +1,24 @@
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import './App.css';
-import Heading from './components/Heading';
-import { defaultTheme } from './theme/themeColors';
+import Container from './components/Container';
+import { subjects } from './data/questions';
+import Header from './layout/Header';
+import Quiz from './pages/quiz/Quiz';
+import Subject from './pages/subject/Subject';
+import GlobalStyles from './theme/GlobalStyles';
+import { darkTheme, defaultTheme } from './theme/themeColors';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <div className="App">
-        <header className="App-header">
-          <Heading variant="h1" level={1}>
-            Quiz APP
-          </Heading>
-        </header>
-      </div>
+      <Header/>
+      <Container>
+          <Subject/>
+      </Container>
+      <GlobalStyles/>
     </ThemeProvider>
   );
 }
+
+
 
 export default App;
