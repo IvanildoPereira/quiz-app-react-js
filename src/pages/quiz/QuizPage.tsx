@@ -91,8 +91,7 @@ const QuizPage = () =>{
                     <Typography color="onErrorColor" align="center" fontWeight="bold">{error}</Typography>    
                 </ErrorContainer>
             }
-            {questions && <Heading variant="h2" level={3}>{questions[currentQuestion].question}</Heading>}
-            
+            {questions && <Heading variant="h2" level={3}>{questions[currentQuestion].question}</Heading>}         
             {questions && questions[currentQuestion].options.map((option: string, index: number)=>(
                <QuestionOption 
                     key={index}
@@ -102,7 +101,8 @@ const QuizPage = () =>{
                     onSelectOption = {onSelectOption}
                 />
             ))}
-            {questions && <ButtonGroup>
+            {questions && 
+            <ButtonGroup>
                 {currentQuestion !== 0 && <Button onClick={handlePreviousQuestion} background="surfaceColor" color="primaryColor" outlined>Previous</Button>}
                 {currentQuestion + 1 !== questions.length && <Button onClick={handleNextQuestion}>Next</Button>}
                 {currentQuestion + 1 === questions.length && <Button onClick={handleSave}>Save</Button>}
