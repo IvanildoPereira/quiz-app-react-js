@@ -1,16 +1,18 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Typography from "../../../components/Typography"
 
 
 interface QuestionCardProps{
+    themeId: number;
     bgImage: string;
     themeName: string;
     numberOfQuestions: number
 }
 
-const QuestionCard = ({bgImage, themeName, numberOfQuestions}: QuestionCardProps) =>{
+const QuestionCard = ({themeId, bgImage, themeName, numberOfQuestions}: QuestionCardProps) =>{
     return(
-        <CardContainer bgImage={bgImage}>
+        <CardContainer to={`/quiz/${themeId}`} bgImage={bgImage}>
             <Description>
                 <Typography variant="body2" fontWeight="bold" color="onPrimaryColor">{themeName}</Typography>
                 <Typography color="onPrimaryColor" fontWeight="bold">{numberOfQuestions} questions</Typography>
@@ -19,7 +21,7 @@ const QuestionCard = ({bgImage, themeName, numberOfQuestions}: QuestionCardProps
     )
 }
 
-const CardContainer = styled.button<{
+const CardContainer = styled(Link)<{
     bgImage: string;
 }>` 
   display: flex;
