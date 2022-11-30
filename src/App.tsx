@@ -1,19 +1,28 @@
 import { ThemeProvider } from 'styled-components';
-import Container from './components/Container';
-import { subjects } from './data/questions';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import Header from './layout/Header';
-import Quiz from './pages/quiz/Quiz';
-import Subject from './pages/subject/Subject';
 import GlobalStyles from './theme/GlobalStyles';
 import { darkTheme, defaultTheme } from './theme/themeColors';
+import Container from './components/Container';
+import SubjectPage from './pages/subject/SubjectPage';
+import QuizPage from './pages/quiz/QuizPage';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header/>
-      <Container>
-          <Subject/>
-      </Container>
+      <Router>
+        <Container>
+          <Routes>
+            <Route path="/" element={<SubjectPage/>} />
+            <Route path="/quiz/:themeId" element={<QuizPage/>} />
+          </Routes>
+        </Container>
+      </Router>
       <GlobalStyles/>
     </ThemeProvider>
   );
