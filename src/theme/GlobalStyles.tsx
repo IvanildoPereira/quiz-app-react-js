@@ -11,5 +11,9 @@ const GlobalStyles = createGlobalStyle`
     body{
         background-color: ${({ theme }) => theme.backgroundColor};
     }
+
+    a{
+        text-decoration: none;
+    }
 `
 export default GlobalStyles;
