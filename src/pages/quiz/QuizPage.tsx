@@ -6,6 +6,7 @@ import Heading from "../../components/Heading";
 import Typography from "../../components/Typography";
 import { questionProps, subjects } from "../../data/questions";
 import Quiz from "./components/Quiz";
+import Result from "./components/Result";
 
 export interface SelectedAnswer{
     questionId: number;
@@ -14,7 +15,8 @@ export interface SelectedAnswer{
 
 const QuizPage = () =>{
     const [themeName, setThemeName] = useState<string | null>(null);
-    const [questions, setQuestions] = useState<questionProps[] | null>(null)
+    const [questions, setQuestions] = useState<questionProps[] | null>(null);
+    const [score, setScore] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null)
     const { themeId } = useParams();
     const navigate = useNavigate();
@@ -53,16 +55,31 @@ const QuizPage = () =>{
         return errorText;
     }
 
+    const getScore = (selectedAnswers: SelectedAnswer[]) =>{
+        if(!questions) return;
+
+        let scoreBoard = 0;
+        
+        selectedAnswers.forEach((selectedAnswer) =>{
+            let findedindex = questions!.findIndex((question) =>{
+                return selectedAnswer.questionId === question.questionId;
+            })
+
+            if(selectedAnswer.selectedAnswer === questions[findedindex].answer) scoreBoard += 1;
+        });
+
+        setScore(scoreBoard)
+    }
+
     const handleSave = (selectedAnswers: SelectedAnswer[]) =>{
         setError(null);
         let nullAnswers = checkForNullAnswers(selectedAnswers); 
         if( nullAnswers.length === 0){
-            return;
+            getScore(selectedAnswers);
+        }else{
+            let errorText = createErrorMessage(nullAnswers)
+            setError(errorText);
         }
-
-        let errorText = createErrorMessage(nullAnswers)
-
-        setError(errorText);
     }
 
     return(
@@ -74,7 +91,8 @@ const QuizPage = () =>{
                         <Typography color="onErrorColor" align="center" fontWeight="bold">{error}</Typography>    
                     </ErrorContainer>
                 }
-                {questions && <Quiz questions={questions} onSave={handleSave}/>}
+                {questions && score === null && <Quiz questions={questions} onSave={handleSave}/>}
+                {questions && score !== null && <Result score={score} questionLength={questions?.length}/>}
             </QuestionCard>
             <GoBack onClick={() => navigate("/")}>Go Back to Home</GoBack>
         </>
