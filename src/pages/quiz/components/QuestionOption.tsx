@@ -12,8 +12,13 @@ let letterOption = ["A", "B", "C", "D", "E"]
 
 const QuestionOption = ({indexItem, option, isSelectedOption, onSelectOption} : QuestionOptionType) =>{
     return(
-        <QuestionOptionOptionContainer onClick={() => onSelectOption(option)} isSelectedOption = {isSelectedOption}>
-            <OptionLetterRounded>
+        <QuestionOptionOptionContainer 
+            data-testid = "question-option" 
+            data-selected = {isSelectedOption} 
+            onClick={() => onSelectOption(option)} 
+            isSelectedOption = {isSelectedOption}
+            >
+            <OptionLetterRounded data-testid="letter-option">
                 <Typography tag="span" variant="body3" color={"onPrimaryColor"} fontWeight="bold">
                     {letterOption[indexItem]}
                 </Typography>
