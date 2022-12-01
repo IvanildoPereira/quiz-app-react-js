@@ -34,9 +34,10 @@ const Quiz = ({questions, onSave}: quizProps) =>{
         setCurrentQuestion(currentQuestion + 1);
     }
 
-    const onSelectOption = (selectedOption: string) =>{
+    const onSelectOption = (event: React.ChangeEvent<HTMLInputElement>) =>{
         const copySelectedAnswers = [...selectedAnswers];
-        copySelectedAnswers[currentQuestion].selectedAnswer = selectedOption;
+        const selectedValue = event.target.value;
+        copySelectedAnswers[currentQuestion].selectedAnswer = selectedValue;
         setSelectedAnswers(copySelectedAnswers);
     }
 
@@ -50,6 +51,7 @@ const Quiz = ({questions, onSave}: quizProps) =>{
             {questions[currentQuestion].options.map((option: string, index: number)=>(
                <QuestionOption 
                     key={index}
+                    questionIndex={currentQuestion}
                     indexItem = {index}
                     option = {option} 
                     isSelectedOption = {selectedAnswers[currentQuestion]?.selectedAnswer === option} 
