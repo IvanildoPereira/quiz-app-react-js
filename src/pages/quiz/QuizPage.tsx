@@ -82,6 +82,10 @@ const QuizPage = () =>{
         }
     }
 
+    const resetQuiz = () =>{
+        setScore(null);
+    }
+
     return(
         <>
             {themeName && <Heading variant="h1" level={2} align="center">Tema - {themeName}</Heading>}
@@ -92,7 +96,7 @@ const QuizPage = () =>{
                     </ErrorContainer>
                 }
                 {questions && score === null && <Quiz questions={questions} onSave={handleSave}/>}
-                {questions && score !== null && <Result score={score} questionLength={questions?.length}/>}
+                {questions && score !== null && <Result score={score} questionLength={questions?.length} tryAgainFunc={resetQuiz}/>}
             </QuestionCard>
             <GoBack onClick={() => navigate("/")}>Go Back to Home</GoBack>
         </>

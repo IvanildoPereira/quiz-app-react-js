@@ -8,10 +8,11 @@ import Typography from "../../../components/Typography";
 interface ResultProps{
     score: number;
     questionLength: number;
+    tryAgainFunc: () => void;
 }
 
 
-const Result = ({ score, questionLength }: ResultProps) =>{
+const Result = ({ score, questionLength, tryAgainFunc }: ResultProps) =>{
     const [percentage, setPercentage] = useState<number>(0);
     const [message, setMessage] = useState<string>("");
 
@@ -28,12 +29,16 @@ const Result = ({ score, questionLength }: ResultProps) =>{
         setMessage(messageText);
     },[score, questionLength])
 
+    const handleTryAgainBTN = () =>{
+        tryAgainFunc();
+    }
+
     return(
         <ResultContainer>
             <Heading variant="h2" level={3}>Final Result</Heading>
             <PieChart percentage={percentage}/>
             <ResultMessage>{message}</ResultMessage>
-            <TryAgainButton>Try it again</TryAgainButton>
+            <TryAgainButton onClick = {handleTryAgainBTN}>Try it again</TryAgainButton>
         </ResultContainer>
     )
 }
