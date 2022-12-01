@@ -15,7 +15,7 @@ describe("QuestionOption", () =>{
     it("should render the letter option as B", () =>{
         const expectedOption = "Guerra de Trincheiras";
         render(<QuestionOption indexItem={1} option={expectedOption} isSelectedOption={false} onSelectOption={onSelect}/>);
-        expect(screen.getByTestId("letter-option").textContent).toBe("B");
+        expect(screen.getByTestId("letter-option")).toHaveTextContent("B");
     })
 
     it("should call onSelect when clicked in the function", () =>{
