@@ -5,17 +5,16 @@ import Button from "../../components/Button";
 import Heading from "../../components/Heading";
 import Typography from "../../components/Typography";
 import { questionProps, subjects } from "../../data/questions";
-import QuestionOption from "./components/QuestionOption";
+import Quiz from "./components/Quiz";
 
-interface SelectedAnswer{
+export interface SelectedAnswer{
     questionId: number;
     selectedAnswer: string | null;
 } 
 
 const QuizPage = () =>{
+    const [themeName, setThemeName] = useState<string | null>(null);
     const [questions, setQuestions] = useState<questionProps[] | null>(null)
-    const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-    const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
     const [error, setError] = useState<string | null>(null)
     const { themeId } = useParams();
     const navigate = useNavigate();
@@ -25,38 +24,14 @@ const QuizPage = () =>{
             return theme.themeId.toString() === themeId 
         })
 
-        if(theme[0] && theme[0].questions){
+        if(theme[0] && theme[0].questions) {
+            setThemeName(theme[0].themeName);
             setQuestions(theme[0].questions);
-
-            let initSelectedAnswers: SelectedAnswer[] = [];
-            theme[0].questions.forEach((question) => {
-                initSelectedAnswers.push({
-                    questionId: question.questionId,
-                    selectedAnswer: null
-                })
-            })
-            setSelectedAnswers(initSelectedAnswers);
-        }else{
-            setError("We couldn't find any Quiz with the id: "+ themeId)
         }
-        
-    },[themeId])
+        else setError("We couldn't find any Quiz with the id: "+ themeId)
+    },[themeId]);
 
-    const handleNextQuestion = () =>{
-        setCurrentQuestion(currentQuestion + 1);
-    }
-
-    const onSelectOption = (selectedOption: string) =>{
-        const copySelectedAnswers = [...selectedAnswers];
-        copySelectedAnswers[currentQuestion].selectedAnswer = selectedOption;
-        setSelectedAnswers(copySelectedAnswers);
-    }
-
-    const handlePreviousQuestion = () =>{
-        setCurrentQuestion(currentQuestion - 1);
-    }
-
-    const checkForNullAnswers = () =>{
+    const checkForNullAnswers = (selectedAnswers: SelectedAnswer[]) =>{
         return selectedAnswers.filter((selectedAnswer) => {
             return selectedAnswer.selectedAnswer === null;
         });
@@ -66,20 +41,21 @@ const QuizPage = () =>{
         let errorText = nullAnswers.length > 1 ? "Questions" : "Question";
         
         nullAnswers.forEach((nullAnswer, index) =>{
-            let findedindex = selectedAnswers.findIndex((Answer) =>{
-                return nullAnswer.questionId === Answer.questionId;
+            let findedindex = questions!.findIndex((question) =>{
+                return nullAnswer.questionId === question.questionId;
             })
             if(nullAnswers.length <= 1) errorText +=` ${findedindex + 1} must be answerd!`;
-            else if(index + 1 !== nullAnswers.length) errorText +=` ${findedindex + 1},`;
+            else if(index === 0) errorText +=` ${findedindex + 1}`
+            else if(index + 1 !== nullAnswers.length) errorText +=`, ${findedindex + 1}`;
             else errorText +=` and ${findedindex + 1} must be answerd!`
         })
 
         return errorText;
     }
 
-    const handleSave = () =>{
+    const handleSave = (selectedAnswers: SelectedAnswer[]) =>{
         setError(null);
-        let nullAnswers = checkForNullAnswers(); 
+        let nullAnswers = checkForNullAnswers(selectedAnswers); 
         if( nullAnswers.length === 0){
             return;
         }
@@ -90,45 +66,28 @@ const QuizPage = () =>{
     }
 
     return(
-        <QuestionCard>
-            {error && 
-                <ErrorContainer>
-                    <Typography color="onErrorColor" align="center" fontWeight="bold">{error}</Typography>    
-                </ErrorContainer>
-            }
-            {questions && <Heading variant="h2" level={3}>{questions[currentQuestion].question}</Heading>}         
-            {questions && questions[currentQuestion].options.map((option: string, index: number)=>(
-               <QuestionOption 
-                    key={index}
-                    indexItem = {index}
-                    option = {option} 
-                    isSelectedOption = {selectedAnswers[currentQuestion]?.selectedAnswer === option} 
-                    onSelectOption = {onSelectOption}
-                />
-            ))}
-            {questions && 
-            <ButtonGroup>
-                {currentQuestion !== 0 && <Button onClick={handlePreviousQuestion} background="surfaceColor" color="primaryColor" outlined>Previous</Button>}
-                {currentQuestion + 1 !== questions.length && <Button onClick={handleNextQuestion}>Next</Button>}
-                {currentQuestion + 1 === questions.length && <Button onClick={handleSave}>Save</Button>}
-            </ButtonGroup>}
-            {!questions && error && <Button onClick={() => navigate("/")}>Go Back To Home</Button>}
-        </QuestionCard>
+        <>
+            {themeName && <Heading variant="h1" level={2} align="center">Tema - {themeName}</Heading>}
+            <QuestionCard>
+                {error && 
+                    <ErrorContainer>
+                        <Typography color="onErrorColor" align="center" fontWeight="bold">{error}</Typography>    
+                    </ErrorContainer>
+                }
+                {questions && <Quiz questions={questions} onSave={handleSave}/>}
+                {!questions && error && <Button onClick={() => navigate("/")}>Go Back To Home</Button>}
+            </QuestionCard>
+        </>
     )
 }
 
 const QuestionCard = styled.div`
     background-color: ${({ theme }) => theme.surfaceColor};
     padding: 20px;
+    margin: 20px 0;
     
     border-radius: 20px;
     box-shadow: 4px 4px 9px -3px rgba(0,0,0,0.75);
-`
-
-const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
 `
 
 const ErrorContainer = styled.div`
