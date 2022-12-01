@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
 import Heading from "../../components/Heading";
@@ -18,23 +18,28 @@ const QuizPage = () =>{
     const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
     const [error, setError] = useState<string | null>(null)
     const { themeId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() =>{
-
         let theme = subjects[0].themes.filter((theme) => {
             return theme.themeId.toString() === themeId 
         })
 
-        setQuestions(theme[0].questions);
+        if(theme[0] && theme[0].questions){
+            setQuestions(theme[0].questions);
 
-        let initSelectedAnswers: SelectedAnswer[] = [];
-        theme[0].questions.forEach((question) => {
-            initSelectedAnswers.push({
-                questionId: question.questionId,
-                selectedAnswer: null
+            let initSelectedAnswers: SelectedAnswer[] = [];
+            theme[0].questions.forEach((question) => {
+                initSelectedAnswers.push({
+                    questionId: question.questionId,
+                    selectedAnswer: null
+                })
             })
-        })
-        setSelectedAnswers(initSelectedAnswers);
+            setSelectedAnswers(initSelectedAnswers);
+        }else{
+            setError("We couldn't find any Quiz with the id: "+ themeId)
+        }
+        
     },[themeId])
 
     const handleNextQuestion = () =>{
@@ -64,7 +69,7 @@ const QuizPage = () =>{
             let findedindex = selectedAnswers.findIndex((Answer) =>{
                 return nullAnswer.questionId === Answer.questionId;
             })
-            if(nullAnswers.length < 2) errorText +=` ${findedindex + 1} must be answerd!`;
+            if(nullAnswers.length <= 1) errorText +=` ${findedindex + 1} must be answerd!`;
             else if(index + 1 !== nullAnswers.length) errorText +=` ${findedindex + 1},`;
             else errorText +=` and ${findedindex + 1} must be answerd!`
         })
@@ -107,6 +112,7 @@ const QuizPage = () =>{
                 {currentQuestion + 1 !== questions.length && <Button onClick={handleNextQuestion}>Next</Button>}
                 {currentQuestion + 1 === questions.length && <Button onClick={handleSave}>Save</Button>}
             </ButtonGroup>}
+            {!questions && error && <Button onClick={() => navigate("/")}>Go Back To Home</Button>}
         </QuestionCard>
     )
 }
