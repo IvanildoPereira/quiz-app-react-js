@@ -12,16 +12,18 @@ interface QuestionCardProps{
 
 const QuestionCard = ({themeId, bgImage, themeName, numberOfQuestions}: QuestionCardProps) =>{
     return(
-        <CardContainer to={`/quiz/${themeId}`} bgImage={bgImage}>
-            <Description>
-                <Typography variant="body2" fontWeight="bold" color="onPrimaryColor">{themeName}</Typography>
-                <Typography color="onPrimaryColor" fontWeight="bold">{numberOfQuestions} questions</Typography>
-            </Description>
-        </CardContainer>
+        <Link to={`/quiz/${themeId}`}>
+            <CardContainer bgImage={bgImage}>
+                <Description>
+                    <Typography variant="body2" fontWeight="bold" color="onPrimaryColor">{themeName}</Typography>
+                    <Typography color="onPrimaryColor" fontWeight="bold">{numberOfQuestions} questions</Typography>
+                </Description>
+            </CardContainer>
+        </Link>
     )
 }
 
-const CardContainer = styled(Link)<{
+const CardContainer = styled.div<{
     bgImage: string;
 }>` 
   display: flex;
