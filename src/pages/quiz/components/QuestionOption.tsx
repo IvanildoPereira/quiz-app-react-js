@@ -2,51 +2,74 @@ import styled from "styled-components";
 import Typography from "../../../components/Typography";
 
 interface QuestionOptionType{
+    questionIndex: number;
     indexItem: number;
     option: string;
     isSelectedOption: boolean;
-    onSelectOption: (selectedOption: string) => void;
+    onSelectOption: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 let letterOption = ["A", "B", "C", "D", "E"]
 
-const QuestionOption = ({indexItem, option, isSelectedOption, onSelectOption} : QuestionOptionType) =>{
+const QuestionOption = ({questionIndex, indexItem, option, isSelectedOption, onSelectOption} : QuestionOptionType) =>{
     return(
         <QuestionOptionOptionContainer 
             data-testid = "question-option" 
             data-selected = {isSelectedOption} 
-            onClick={() => onSelectOption(option)} 
-            isSelectedOption = {isSelectedOption}
             >
-            <OptionLetterRounded data-testid="letter-option">
-                <Typography tag="span" variant="body3" color={"onPrimaryColor"} fontWeight="bold">
-                    {letterOption[indexItem]}
-                </Typography>
-            </OptionLetterRounded>
-            <Typography className="text_question" variant="body3" color={isSelectedOption ? "onPrimaryColor" : "onSurfaceColor"} fontWeight="bold">{option}</Typography>
+            <HiddinInputRadio 
+                id={`question-${questionIndex}-option-${indexItem}`}
+                value={option} 
+                checked={isSelectedOption}
+                name={`question-${questionIndex}-radio`}
+                onChange={onSelectOption}
+            ></HiddinInputRadio>
+            <LabelContainer htmlFor={`question-${questionIndex}-option-${indexItem}`} isSelectedOption = {isSelectedOption}>
+                <OptionLetterRounded data-testid="letter-option">
+                    <Typography tag="span" variant="body3" color={"onPrimaryColor"} fontWeight="bold">
+                        {letterOption[indexItem]}
+                    </Typography>
+                </OptionLetterRounded>
+                <Typography tag="span" className="text_question" variant="body3" color={isSelectedOption ? "onPrimaryColor" : "onSurfaceColor"} fontWeight="bold">{option}</Typography>
+            </LabelContainer>
         </QuestionOptionOptionContainer>
     )
 }
 
-const QuestionOptionOptionContainer = styled.button<{
+const QuestionOptionOptionContainer = styled.div``;
+
+const HiddinInputRadio = styled.input.attrs({
+    type: "radio"
+})`
+    position: absolute;
+    //opacity: 0;
+
+    &:checked ~ label{
+        background-color: ${({ theme }) => theme.primaryColor};
+    }
+`
+
+const LabelContainer = styled.label<{
     isSelectedOption: boolean;
-}>` 
+}>`
     display: flex;
     align-items: center;
+    background-color: ${({ theme }) => theme.onPrimaryColor};
     width: 100%;
-    background-color: ${({ theme, isSelectedOption }) => isSelectedOption ? theme.primaryColor : theme.surfaceColor};
     padding: 20px;
     margin: 15px 0;
     cursor: pointer;
     border: 1px solid ${({ theme }) => theme.primaryColor};
     border-radius: 10px;
 
-    &:hover{
-        background-color: ${({ theme }) => theme.primaryColor} 
-    }
+    @media(min-width: 992px){
+        &:hover{
+            background-color: ${({ theme }) => theme.primaryColor} 
+        }
 
-    &:hover p{
-        color: ${({ theme }) => theme.onPrimaryColor}
+        &:hover span{
+            color: ${({ theme }) => theme.onPrimaryColor}
+        }
     }
 `;
 
