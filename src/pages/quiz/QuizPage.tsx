@@ -94,7 +94,7 @@ const ErrorContainer = styled.div`
     background-color: ${({ theme }) => theme.errorColor};
     width: 100%;
     padding: 20px;
-    margin: 20px 0;
+    margin-bottom: 20px;
     border-radius: 10px;
 `;
 
