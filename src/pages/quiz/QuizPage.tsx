@@ -75,8 +75,8 @@ const QuizPage = () =>{
                     </ErrorContainer>
                 }
                 {questions && <Quiz questions={questions} onSave={handleSave}/>}
-                {!questions && error && <Button onClick={() => navigate("/")}>Go Back To Home</Button>}
             </QuestionCard>
+            <GoBack onClick={() => navigate("/")}>Go Back to Home</GoBack>
         </>
     )
 }
@@ -97,5 +97,13 @@ const ErrorContainer = styled.div`
     margin-bottom: 20px;
     border-radius: 10px;
 `;
+
+const GoBack = styled(Button).attrs({
+    background: "surfaceColor",
+    color: "primaryColor",
+    outlined: true
+})`
+    margin: 40px 0;
+`
 
 export default QuizPage;
