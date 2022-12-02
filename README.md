@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img alt="Demo gif" src="./github/quizapp.gif" style="max-width:100%;">  
+  <img alt="Demo gif" src="./github/quizapp_questionmenu.gif" style="max-width:100%;">  
   Gif with low quality
 </p>
 
