@@ -13,7 +13,7 @@ let letterOption = ["A", "B", "C", "D", "E"]
 
 const QuestionOption = ({questionIndex, indexItem, option, isSelectedOption, onSelectOption} : QuestionOptionType) =>{
     return(
-        <QuestionOptionOptionContainer 
+        <QuestionOptionContainer 
             data-testid = "question-option" 
             data-selected = {isSelectedOption} 
             >
@@ -32,11 +32,11 @@ const QuestionOption = ({questionIndex, indexItem, option, isSelectedOption, onS
                 </OptionLetterRounded>
                 <Typography tag="span" className="text_question" variant="body4" color={isSelectedOption ? "onPrimaryColor" : "onSurfaceColor"} fontWeight="bold">{option}</Typography>
             </LabelContainer>
-        </QuestionOptionOptionContainer>
+        </QuestionOptionContainer>
     )
 }
 
-const QuestionOptionOptionContainer = styled.div``;
+const QuestionOptionContainer = styled.div``;
 
 const HiddinInputRadio = styled.input.attrs({
     type: "radio"
