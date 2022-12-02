@@ -5,6 +5,7 @@ import Heading from "../../../components/Heading";
 import { questionProps } from "../../../data/questions";
 import { SelectedAnswer } from "../QuizPage";
 import QuestionList from "./QuestionList";
+import QuestionMenu from "./QuestionsMenu";
 
 interface quizProps{
     questions: questionProps[];
@@ -34,6 +35,10 @@ const Quiz = ({questions, onSave}: quizProps) =>{
         setCurrentQuestion(currentQuestion + 1);
     }
 
+    const onSelectQuestionMenu = (index: number) =>{
+        setCurrentQuestion(index);
+    }
+
     const onSelectOption = (event: React.ChangeEvent<HTMLInputElement>) =>{
         const copySelectedAnswers = [...selectedAnswers];
         const selectedValue = event.target.value;
@@ -47,6 +52,7 @@ const Quiz = ({questions, onSave}: quizProps) =>{
 
     return(
         <QuizContainer>
+            <QuestionMenu questions={questions} currentQuestion={currentQuestion} onSelectMenu={onSelectQuestionMenu}/>
             <Heading variant="h3" level={3}>{`${currentQuestion + 1}) `}{questions[currentQuestion].question}</Heading>    
             <QuestionList 
                 question={questions[currentQuestion]} 
