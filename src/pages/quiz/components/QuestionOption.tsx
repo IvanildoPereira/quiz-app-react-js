@@ -42,7 +42,7 @@ const HiddinInputRadio = styled.input.attrs({
     type: "radio"
 })`
     position: absolute;
-    //opacity: 0;
+    opacity: 0;
 
     &:checked ~ label{
         background-color: ${({ theme }) => theme.primaryColor};
