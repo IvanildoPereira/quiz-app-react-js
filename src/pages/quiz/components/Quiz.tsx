@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import Heading from "../../../components/Heading";
 import { questionProps } from "../../../data/questions";
 import { SelectedAnswer } from "../QuizPage";
-import QuestionOption from "./QuestionOption";
+import QuestionList from "./QuestionList";
 
 interface quizProps{
     questions: questionProps[];
@@ -47,17 +47,13 @@ const Quiz = ({questions, onSave}: quizProps) =>{
 
     return(
         <QuizContainer>
-            <Heading variant="h3" level={3}>{`${currentQuestion + 1}) `}{questions[currentQuestion].question}</Heading>       
-            {questions[currentQuestion].options.map((option: string, index: number)=>(
-               <QuestionOption 
-                    key={index}
-                    questionIndex={currentQuestion}
-                    indexItem = {index}
-                    option = {option} 
-                    isSelectedOption = {selectedAnswers[currentQuestion]?.selectedAnswer === option} 
-                    onSelectOption = {onSelectOption}
-                />
-            ))}
+            <Heading variant="h3" level={3}>{`${currentQuestion + 1}) `}{questions[currentQuestion].question}</Heading>    
+            <QuestionList 
+                question={questions[currentQuestion]} 
+                currentQuestion={currentQuestion}
+                selectedAnswerQuestion={selectedAnswers[currentQuestion]}
+                onSelectOption={onSelectOption}
+            />   
             <ButtonGroup>
                 {currentQuestion !== 0 && <Button onClick={handlePreviousQuestion} background="surfaceColor" color="primaryColor" outlined>Previous</Button>}
                 {currentQuestion + 1 !== questions.length && <Button onClick={handleNextQuestion}>Next</Button>}
