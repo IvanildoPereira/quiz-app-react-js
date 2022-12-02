@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import Header from './layout/Header';
 import GlobalStyles from './theme/GlobalStyles';
-import { darkTheme, defaultTheme } from './theme/themeColors';
+import { defaultTheme } from './theme/themeColors';
 import Container from './components/Container';
 import SubjectPage from './pages/subject/SubjectPage';
 import QuizPage from './pages/quiz/QuizPage';

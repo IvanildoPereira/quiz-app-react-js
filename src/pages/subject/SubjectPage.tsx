@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import styled, { ThemeConsumer } from "styled-components";
+import styled from "styled-components";
 import Heading from "../../components/Heading";
-import Typography from "../../components/Typography";
 import { subjects, subjectProps } from "../../data/questions";
 import QuestionCard from "./components/QuestionCard";
 

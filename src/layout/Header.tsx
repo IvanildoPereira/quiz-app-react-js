@@ -1,7 +1,5 @@
 import styled from "styled-components"
 import Container from "../components/Container"
-import Heading from "../components/Heading"
-import Typography from "../components/Typography"
 import Logo from "../assets/logo.png"
 
 const Header = () =>{
