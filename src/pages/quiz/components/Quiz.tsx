@@ -47,7 +47,7 @@ const Quiz = ({questions, onSave}: quizProps) =>{
 
     return(
         <QuizContainer>
-            <Heading variant="h2" level={3}>{`${currentQuestion + 1}) `}{questions[currentQuestion].question}</Heading>       
+            <Heading variant="h3" level={3}>{`${currentQuestion + 1}) `}{questions[currentQuestion].question}</Heading>       
             {questions[currentQuestion].options.map((option: string, index: number)=>(
                <QuestionOption 
                     key={index}

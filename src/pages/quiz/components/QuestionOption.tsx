@@ -26,11 +26,11 @@ const QuestionOption = ({questionIndex, indexItem, option, isSelectedOption, onS
             ></HiddinInputRadio>
             <LabelContainer htmlFor={`question-${questionIndex}-option-${indexItem}`} isSelectedOption = {isSelectedOption}>
                 <OptionLetterRounded data-testid="letter-option">
-                    <Typography tag="span" variant="body3" color={"onPrimaryColor"} fontWeight="bold">
+                    <Typography tag="span" variant="body5" color={"onPrimaryColor"} fontWeight="bold">
                         {letterOption[indexItem]}
                     </Typography>
                 </OptionLetterRounded>
-                <Typography tag="span" className="text_question" variant="body3" color={isSelectedOption ? "onPrimaryColor" : "onSurfaceColor"} fontWeight="bold">{option}</Typography>
+                <Typography tag="span" className="text_question" variant="body4" color={isSelectedOption ? "onPrimaryColor" : "onSurfaceColor"} fontWeight="bold">{option}</Typography>
             </LabelContainer>
         </QuestionOptionOptionContainer>
     )
